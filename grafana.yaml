@@ -116,15 +116,8 @@ spec:
             defaultMode: 420
             name: rancher-monitoring-grafana
           name: config
-        - name: grafana-pv
-          persistentVolumeClaim:
-            claimName: grafana-pvc
         - emptyDir: {}
           name: sc-dashboard-volume
-        - configMap:
-            defaultMode: 420
-            name: rancher-monitoring-grafana
-          name: config
         - configMap:
             defaultMode: 420
             name: rancher-monitoring-grafana-config-dashboards
