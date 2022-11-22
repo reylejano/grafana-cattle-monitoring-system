@@ -33,6 +33,26 @@ spec:
         fsGroup: 472
         supplementalGroups:
           - 0
+      initContainers:
+        - env:
+            - name: METHOD
+              value: LIST
+            - name: LABEL
+              value: grafana_datasource
+            - name: FOLDER
+              value: /etc/grafana/provisioning/datasources
+            - name: RESOURCE
+              value: both
+          image: rancher/mirrored-kiwigrid-k8s-sidecar:1.12.3
+          imagePullPolicy: IfNotPresent
+          name: grafana-sc-datasources
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: sc-datasources-volume
+          _init: true
+          __active: true
       containers:
         - env:
             - name: METHOD
@@ -87,6 +107,14 @@ spec:
               name: grafana-pv
             - mountPath: /tmp/dashboards
               name: sc-dashboard-volume
+            - mountPath: /etc/grafana/grafana.ini
+              name: config
+              subPath: grafana.ini
+            - mountPath: /etc/grafana/provisioning/dashboards/sc-dashboardproviders.yaml
+              name: sc-dashboard-provider
+              subPath: provider.yaml
+            - mountPath: /etc/grafana/provisioning/datasources
+              name: sc-datasources-volume
           env:
             - name: GF_PATHS_DATA
               value: /var/lib/grafana/
