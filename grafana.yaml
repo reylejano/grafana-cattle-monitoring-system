@@ -130,6 +130,26 @@ spec:
             claimName: grafana-pvc
         - emptyDir: {}
           name: sc-dashboard-volume
+      - configMap:
+          defaultMode: 420
+          name: rancher-monitoring-grafana
+        name: config
+      - configMap:
+          defaultMode: 420
+          name: rancher-monitoring-grafana-config-dashboards
+        name: sc-dashboard-provider
+      - emptyDir: {}
+        name: sc-datasources-volume
+      - emptyDir: {}
+        name: nginx-home
+      - configMap:
+          defaultMode: 420
+          items:
+          - key: nginx.conf
+            mode: 438
+            path: nginx.conf
+          name: grafana-nginx-proxy-config
+        name: grafana-nginx
 ---
 apiVersion: v1
 kind: Service
