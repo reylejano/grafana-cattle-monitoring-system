@@ -125,6 +125,10 @@ spec:
       serviceAccount: rancher-monitoring-grafana
       serviceAccountName: rancher-monitoring-grafana 
       volumes:
+        - configMap:
+            defaultMode: 420
+            name: rancher-monitoring-grafana
+          name: config
         - name: grafana-pv
           persistentVolumeClaim:
             claimName: grafana-pvc
