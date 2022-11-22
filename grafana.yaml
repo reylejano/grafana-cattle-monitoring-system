@@ -51,8 +51,6 @@ spec:
           volumeMounts:
             - mountPath: /etc/grafana/provisioning/datasources
               name: sc-datasources-volume
-          _init: true
-          __active: true
       containers:
         - env:
             - name: METHOD
