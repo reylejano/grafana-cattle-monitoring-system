@@ -1,17 +1,4 @@
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: grafana-pvc
-  namespace: cattle-monitoring-system
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: longhorn
-  resources:
-    requests:
-      storage: 1Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -102,7 +89,7 @@ spec:
               memory: 50Mi
           volumeMounts:
             - mountPath: /var/lib/grafana
-              name: grafana-pv
+              name: storage
             - mountPath: /tmp/dashboards
               name: sc-dashboard-volume
             - mountPath: /etc/grafana/grafana.ini
@@ -144,6 +131,8 @@ spec:
           name: sc-dashboard-provider
         - emptyDir: {}
           name: sc-datasources-volume
+        - emptyDir: {}
+          name: storage
         - emptyDir: {}
           name: nginx-home
         - configMap:
